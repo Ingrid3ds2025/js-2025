@@ -6,7 +6,7 @@ function addMessage() {
     const messageInput = document.getElementById('message');
 
     const username = usernameInput.value.trim();
-    const message  = messageInput.value.trim();
+    const message = messageInput.value.trim();
 
     if(!username || !message) {
         alert('Por favor, preencha todos os campos!');
@@ -15,39 +15,40 @@ function addMessage() {
 
     // ADICIONAR NOVA MENSAGEM AO VETOR OU ARRAY
     const newMessage = {
-        username:  username,
-        message:   message,
+        username: username,
+        message: message,
         timestamp: new Date().toLocaleTimeString([], {hour: '2-digit', minute: '2-digit'})
-    }
+    };
 
-    message.push(newMessage);
+    messages.push(newMessage);
 
-    //ATUALIZA TABELA
+    //ATUALIZAR TABELA
     updateChat();
 
-    //LIMPAR CAMPOS
+    //Limpa campos
     messageInput.value = '';
     messageInput.focus();
+
 }
 
-function updateChat(){
-    const chatBody     = document.getElementById('chat-body');
-    chatBody.innerHTML = '';
+    function updateChat(){
+        const chatBody = document.getElementById('chat-body');
+        chatBody.innerHTML = '';
 
-    messages.forEach(msg => {
-        const row = document.getElementById('tr');
-        row.innerHTML = `
-            <td> ${msg.username} </td>
-            <td> ${msg.message} </td>
-            <td> class="timestamp" ${msg.timestamp} </td>
-        `;
-        chatBody.appendChild(row);
-    })
-}
-
-//PERMITIR ENVIAR COM A TECLA ENTER
-document.getElementById('message').addEventListener('keypress', function(e){
-    if(e.key === 'Enter'){
-        addMessage();
+        messages.forEach(msg => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+              <td>${msg.username}</td>
+              <td>${msg.message}</td>
+              <td class="timestamp">${msg.timestamp}</td>
+            `;
+            chatBody.appendChild(row);
+        })
     }
-});
+
+    //PERMITIR ENVIAR COOM A TEKCLA ENTER
+    document.getElementById('message').addEventListener('keypress', function(e){
+        if(e.key === 'Enter'){
+            addMessage();
+        }
+    });
